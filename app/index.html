@@ -2,14 +2,24 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>baldwin</title>
-    <meta name="description" content="">
+    <title>Baldwin</title>
+    <meta name="description" content="Baldwin is a simple wrapper around the SEPTA Next to Arrive API to help you never miss your train.">
+    <meta name="author" content="Aaron Ogle">
     <meta name="viewport" content="width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
     <link rel="shortcut icon" href="/favicon.ico">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" sizes="196x196" href="ico/baldwin_logo_196.png">
+    <link rel="shortcut icon" sizes="128x128" href="ico/baldwin_logo_128.png">
+    <link rel="apple-touch-icon-precomposed"  sizes="144x144" href="ico/baldwin_logo_144.png">
+    <link rel="apple-touch-icon-precomposed"  sizes="114x114" href="ico/baldwin_logo_114.png">
+    <link rel="apple-touch-icon-precomposed"  sizes="72x72" href="ico/baldwin_logo_72.png">
+    <link rel="apple-touch-icon-precomposed"  href="ico/baldwin_logo_57.png">
+
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -19,41 +29,131 @@
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
 
+    <script id="route-template" type="text/html">
+        <button type="button" class="close remove-route btn-icon-txt">&times;</button>
+        <h4>{{ start.name }} to {{ end.name }}</h4>
+        <ol class="unstyled trip-list"></ol>
+    </script>
+
+    <script id="trip-template" type="text/html">
+      <li class="trip {{trip_class}}">
+        <div class="leg  {{ orig_alert_class }}">
+          <span class="status {{ orig_label_class }}">
+            <div class="timer"></div>
+            <label>{{ orig_delay }}</label>
+          </span>
+          <div class="info">
+            <span class="time-group">
+                <label>Departs</label>
+                <div class="time">{{ orig_departure_time.time }}<span class="am-pm">{{ orig_departure_time.meridian }}</span></div>
+            </span>
+            <span class="time-group secondary">
+              <label>Arrives</label>
+              <div class="time arrival">{{ orig_arrival_time.time }}<span class="am-pm">{{ orig_arrival_time.meridian }}</div>
+            </span>
+            <span class="train-line secondary">
+              Via the {{ orig_line }} Line
+            </span>
+          </div>
+        </div>
+        {{#Connection}}
+        <div class="connection">
+          <label>Connect</label> {{ Connection }}
+        </div>
+        <div class="leg {{ term_alert_class }}">
+          <span class="status">
+             <div class="timer"></div>
+             <label>{{ term_delay }}</label>
+          </span>
+          <div class="info">
+            <span class="time-group">
+                <label>Departs</label>
+                <div class="time">
+                  {{ term_depart_time.time }}<span class="am-pm">{{ term_depart_time.meridian }}</span>
+                </div>
+            </span>
+            <span class="time-group secondary">
+              <label class="arrival">Arrives</label>
+              <div class="time">
+                {{ term_arrival_time.time }}<span class="am-pm">{{ term_arrival_time.meridian }}</span>
+              </div>
+            </span>
+            <div class="train-line secondary">
+              Via the {{ term_line }} Line
+            </div>
+          </div>
+          {{/Connection}}
+        </div>
+      </li>
+    </script>
+
+    <script id="message-template" type="text/html">
+      <li class="trip-message">{{ message }}</li>
+    </script>
   </head>
   <body>
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Baldwin (for SEPTA)</a>
 
-
-    <div class="hero-unit">
-      <h1>'Allo, 'Allo!</h1>
-      <p>You now have</p>
-      <ul>
-      <li>HTML5 Boilerplate</li>
-      <li>Sass</li>
-      <li>Modernizr</li>
-      </ul>
+          <p id="now" class="navbar-text"></p>
+          <a id="add-route-btn" class="btn btn-icon-txt btn-black" href="#add-route">+</a>
+        </div>
+      </div>
     </div>
+
+    <div class="content container">
+    <div class="row">
+      <div class="results-box span9 empty">
+        <ol id="route-list" class="unstyled"></ol>
+      </div>
+      <div id="add-route" class="span3">
+        <h4>Add a Route</h4>
+        <form id="add-route-form">
+          <div class="form-group">
+            <label for="start-station">Start Station</label>
+            <input type="text" id="start-station" name="start" class="station span3" placeholder="Where are you?" data-provide="typeahead">
+         </div>
+         <div class="form-group">
+          <label for="end-station">End Station</label>
+          <input type="text" id="end-station" name="end" class="station span3"  placeholder="Where are you going?" data-provide="typeahead">
+         </div>
+          <button type="submit" class="btn btn-primary btn-block">Add Route</button>
+        </form>
+      </div>
+
+    </div> <!-- /container -->
+
+    <div class="backstory"><p>Baldwin is named after Philadelphia's Baldwin Locomotive Works, at one time the world's largest steam engine manufacturer. Read more on <a href="http://en.m.wikipedia.org/wiki/Baldwin_Locomotive_Works">Wikipedia</a>. Learn more about the <a href="http://www.septa.org/site/nta.html">data provided by SEPTA.</a></p>
+      <p> Baldwin was developed by <a href="https://twitter.com/atogle">Aaron Ogle</a>, designed by <a href="http://briantjacobs.com/">Brian Jacobs</a>.</p></div>
 
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-35454304-1', 'auto');
+      ga('send', 'pageview');
+
     </script>
 
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/stations.js"></script>
+    <script src="scripts/baldwin.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
