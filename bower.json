@@ -3,6 +3,11 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
-    "modernizr": "~2.8.2"
+    "modernizr": "~2.8.2",
+    "underscore": "~1.7.0",
+    "backbone": "~1.1.2",
+    "moment": "~2.8.4",
+    "backbone.localStorage": "~1.1.14",
+    "handlebars": "~2.0.0"
   }
 }
