@@ -71,6 +71,7 @@ var Baldwin = Baldwin || {};
     { name: 'Highland', lat: 39.83377122, lng: -75.39301848 },
     { name: 'Holmesburg Jct', lat: 40.03251064, lng: -75.02397846 },
     { name: 'Ivy Ridge', lat: 40.03412761, lng: -75.23542184 },
+    { name: 'Jefferson Station', lat: 39.95244491, lng: -75.1570276 },
     { name: 'Jenkintown-Wyncote', lat: 40.09344768, lng: -75.13791805 },
     { name: 'Langhorne', lat: 40.16063066, lng: -74.91311114 },
     { name: 'Lansdale', lat: 40.24291744, lng: -75.2848875 },
