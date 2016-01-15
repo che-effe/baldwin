@@ -82,7 +82,7 @@ var Baldwin = Baldwin || {};
     { name: 'Malvern', lat: 40.03638033, lng: -75.51554333 },
     { name: 'Manayunk', lat: 40.02676803, lng: -75.22475825 },
     { name: 'Marcus Hook', lat: 39.82154838, lng: -75.41956843 },
-    { name: 'Market East', lat: 39.95244491, lng: -75.1570276 },
+    { name: 'Jefferson Station', lat: 39.95244491, lng: -75.1570276 },
     { name: 'Meadowbrook', lat: 40.11137064, lng: -75.09251482 },
     { name: 'Media', lat: 39.91425949, lng: -75.39480281 },
     { name: 'Melrose Park', lat: 40.05947387, lng: -75.1291347 },
