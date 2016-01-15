@@ -147,7 +147,7 @@ var Baldwin = Baldwin || {};
         data: {
           req1: this.model.get('start').name,
           req2: this.model.get('end').name,
-          req3: 3
+          req3: 5
         },
         dataType: 'jsonp',
         success: function(trips){
